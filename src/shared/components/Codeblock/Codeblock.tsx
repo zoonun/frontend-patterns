@@ -1,16 +1,16 @@
 "use client";
 
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { useState } from "react";
 import * as hljsStyles from "react-syntax-highlighter/dist/esm/styles/hljs";
 import Dropdown from "../Dropdown/Dropdown";
+import { useThemeStore } from "@/entities/ui/store/theme";
 
 interface Props {
   code: string;
 }
 
 function CustomCodeBlock({ code }: Props) {
-  const [selectedStyle, setSelectedStyle] = useState("");
+  const themeState = useThemeStore((state) => state.theme);
   const availableStyles = Object.keys(hljsStyles);
 
   return (
@@ -22,7 +22,7 @@ function CustomCodeBlock({ code }: Props) {
       />
       <SyntaxHighlighter
         language="typescript"
-        style={hljsStyles[selectedStyle as keyof typeof hljsStyles]}
+        style={hljsStyles[themeState.codeStyle as keyof typeof hljsStyles]}
       >
         {code}
       </SyntaxHighlighter>
